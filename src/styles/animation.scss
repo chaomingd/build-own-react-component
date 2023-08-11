@@ -1,0 +1,30 @@
+
+.fade-in {
+  &-enter {
+    opacity: 0;
+  }
+  &-entering {
+    opacity: 1;
+    transition: opacity 300ms ease;
+  }
+  &-exit {
+    opacity: 1;
+  }
+  &-exiting {
+    opacity: 0;
+    transition: opacity 300ms ease;
+  }
+}
+
+.slide-to-top {
+  &-enter {
+    transform: translateY(100%);
+  }
+  &-entering,
+  &-exiting {
+    transition: transform 300ms ease;
+  }
+  &-exiting {
+    transform: translateY(100%);
+  }
+}

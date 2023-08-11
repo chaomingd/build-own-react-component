@@ -1,0 +1,25 @@
+@import '~@/var.scss';
+
+.ks-form {
+  &-item {
+    display: flex;
+    line-height: 32px;
+    margin-bottom: 22px;
+    &-error {
+      margin-bottom: 0;
+    }
+
+    &-label {
+      font-size: 14px;
+    }
+  }
+
+  &-error-message {
+    font-size: 12px;
+    font-weight: 400;
+    color: $color-pink;
+    line-height: 17px;
+    margin-top: 5px;
+    text-align: left;
+  }
+}

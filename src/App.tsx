@@ -1,24 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Form from './components/Form';
+import { Input } from 'antd';
 
 function App() {
+  console.log('app render')
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Form
+        onValuesChange={(values) => {
+          // console.log(values);
+        }}
+      >
+        <Form.Item
+          labelStyles={{
+            width: 100,
+          }}
+          label="用户名"
+          field={['userInfo', 'username']}
+          rules={[
+            {
+              required: true,
+              message: '请输入用户名'
+            }
+          ]}
         >
-          Learn React
-        </a>
-      </header>
+          <Input />
+        </Form.Item>
+        <Form.Item
+          labelStyles={{
+            width: 100,
+          }}
+          label="密码"
+          field={['userInfo', 'password']}
+          rules={[
+            {
+              required: true,
+              message: '请输入密码'
+            }
+          ]}
+        >
+          <Input />
+        </Form.Item>
+      </Form>
     </div>
   );
 }
