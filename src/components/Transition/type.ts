@@ -3,6 +3,7 @@ import { ReactElement, ReactNode } from 'react';
 
 export interface TransitionProps {
   visible?: boolean;
+  appear?: boolean;
   exitUnMount?: boolean;
   children: ReactElement | ((status: ETransitionStatus, transitionName: string, transitionNames: string[]) => ReactElement);
   duration?: number | {

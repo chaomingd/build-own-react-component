@@ -10,10 +10,13 @@ import {
 } from './type';
 import { getDuration } from './utils';
 
-export function useTransitionModel() {
+export function useTransitionModel(options?: {
+  appear?: boolean;
+  visible?: boolean;
+}) {
   return useModel<ITransitionState>({
     state: {
-      status: ETransitionStatus.exited,
+      status: (options?.visible && !options?.appear) ? ETransitionStatus.entered : ETransitionStatus.exited,
     },
   })
 }
@@ -25,10 +28,14 @@ const Transition = ({
   transitionName,
   duration = 300,
   model: outerTransitionModel,
+  appear = true,
   ...props
 }: TransitionProps) => {
   const propsRef = useLatest(props);
-  const innerTransitionModel = useTransitionModel();
+  const innerTransitionModel = useTransitionModel({
+    visible,
+    appear,
+  });
   const transitionModel = outerTransitionModel || innerTransitionModel;
   const transitionClassNames = useMemo(() => {
     let baseClassNames: string[];
