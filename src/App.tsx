@@ -21,12 +21,16 @@ function App() {
             {
               required: true,
               message: '请输入用户名'
+            },
+            {
+              type: 'number',
+              message: '只能是数字'
             }
           ]}
         >
           <Input />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           labelStyles={{
             width: 100,
           }}
@@ -40,7 +44,7 @@ function App() {
           ]}
         >
           <Input />
-        </Form.Item>
+        </Form.Item> */}
       </Form>
     </div>
   );

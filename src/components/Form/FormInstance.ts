@@ -80,7 +80,9 @@ export class FormInstance extends Model<FormState> {
         }
       }
     }, [fieldString, rules]);
-    const state = this.useSelector(undefined, fieldString);
+    const state = this.useSelector((oldValues, nextValues) => {
+      return getFieldsValue(oldValues.formData, field) !== getFieldsValue(nextValues.formData, field)
+    }, fieldString);
     
     return [getFieldsValue(state.formData, field), state] as [any, FormState];
   };
@@ -156,6 +158,7 @@ export class FormInstance extends Model<FormState> {
       },
       {
         include: [fieldToString(field)],
+        silent: true,
       }
     );
     this.validate([field]);

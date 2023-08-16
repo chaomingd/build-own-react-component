@@ -2,17 +2,15 @@
 .fade-in {
   &-enter {
     opacity: 0;
+    transform: translate3d(0, -3px, 0);
   }
   &-entering {
-    opacity: 1;
-    transition: opacity 300ms ease;
-  }
-  &-exit {
-    opacity: 1;
+    transition: all 200ms ease;
   }
   &-exiting {
     opacity: 0;
-    transition: opacity 300ms ease;
+    transform: translate3d(0, -3px, 0);
+    transition: all 300ms ease;
   }
 }
 

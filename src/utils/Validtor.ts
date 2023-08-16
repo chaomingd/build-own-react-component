@@ -4,6 +4,7 @@ import { strLength } from './string';
 const TYPES_PATTERN = {
   phone: /^1[3-9]\d{9}$/,
   email: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+  number: /^\d+$/,
 };
 
 export interface Rule {

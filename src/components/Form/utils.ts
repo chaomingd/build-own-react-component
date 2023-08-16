@@ -25,17 +25,25 @@ export function makeObject(obj: Record<string, any> | any[] | undefined | null, 
     let subObj = objectValue as any;
     for (let i = 0; i < field.length - 1; i++) {
       const key = field[i];
-      subObj[key] = make(subObj[key], field[i + 1])
+      subObj[key] = make(subObj[key], field[i + 1], i === field.length - 2);
       subObj = subObj[key];
     }
   }
 
-  function make(obj: any, key: string | number) {
+  function make(obj: any, key: string | number, clone = false) {
     if (!obj) {
       if (typeof key === 'number') {
         return []
       } else {
         return {}
+      }
+    } else {
+      if (clone) {
+        if (Array.isArray(obj)) {
+          return [...obj]
+        } else {
+          return {...obj}
+        }
       }
     }
     return obj;

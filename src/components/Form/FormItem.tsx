@@ -25,7 +25,6 @@ const FormItem = ({
   rules,
 }: FormItemProps) => {
   const formInstance = useContext(FormContext);
-  console.log('form item render', field)
   const fieldString = useMemo(() => {
     return fieldToString(field);
   }, [field]);
@@ -63,11 +62,9 @@ const FormItem = ({
   const transtionModel = useTransitionModel();
   const { status: transitionStatus } = transtionModel.useGetState();
   const errorMessageRef = useRef<string>();
-  useEffect(() => {
-    if (error) {
-      errorMessageRef.current = error.message;
-    }
-  }, [error]);
+  if (error) {
+    errorMessageRef.current = error.message;
+  }
 
   const hasForItemErrorClassName =
     transitionStatus !== ETransitionStatus.exited;
