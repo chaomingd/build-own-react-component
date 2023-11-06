@@ -10,16 +10,7 @@ export function useSetValue(
         fakeInputDivRef.current.appendChild(
           document.createTextNode(value || '')
         );
-      } else if (
-        fakeInputDivRef.current.firstChild.nodeType !== Node.TEXT_NODE
-      ) {
-        fakeInputDivRef.current.insertBefore(
-          document.createTextNode(value || ''),
-          fakeInputDivRef.current.firstChild
-        );
-      } else if (
-        fakeInputDivRef.current.firstChild.nodeType === Node.TEXT_NODE
-      ) {
+      } else {
         fakeInputDivRef.current.firstChild.textContent = value || '';
       }
     }

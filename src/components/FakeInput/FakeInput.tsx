@@ -65,7 +65,7 @@ const FakeInput = forwardRef<HTMLInputElement | null, FakeInputProps>(
             }}
           >
             <div
-              contentEditable={true}
+              contentEditable
               suppressContentEditableWarning
               className={classNames(`${CLS_PREFIX}-el`)}
               {...inputProps}
@@ -79,15 +79,14 @@ const FakeInput = forwardRef<HTMLInputElement | null, FakeInputProps>(
                   }
                 }
               }}
-            >
-              {showBlinkingCursor && (
-                <div
-                  ref={cursorRef}
-                  draggable={false}
-                  className={`${CLS_PREFIX}-blinking-cursor`}
-                />
-              )}
-            </div>
+            />
+            {showBlinkingCursor && (
+              <div
+                ref={cursorRef}
+                draggable={false}
+                className={`${CLS_PREFIX}-blinking-cursor`}
+              />
+            )}
           </pre>
         </div>
       </div>
