@@ -10,7 +10,7 @@ export function usePressEnter({ domRef }: Config) {
     const shortCutKeyManager = new ShortCutKeyManager(domRef.current!);
     shortCutKeyManager.on('enter', (e) => {
       e.preventDefault();
-    })
+    });
     return () => {
       shortCutKeyManager.dispose();
     }

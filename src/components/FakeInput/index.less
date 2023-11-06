@@ -3,6 +3,8 @@
 @input-color: rgba(0, 0, 0, 0.88);
 @input-height: 32px;
 @padding-vertical: 4px;
+@input-area-height: 1.5;
+@input-blinking-cursor: 1.2;
 
 .@{prefix} {
   display: inline-flex;
@@ -33,15 +35,14 @@
   }
 
   &-wrapper {
-    display: flex;
-    align-items: center;
     flex: 1;
     box-sizing: border-box;
     position: relative;
-    height: 100%;
+    height: @input-area-height * 1em;
     width: 0;
     min-width: 0;
     cursor: text;
+    overflow: hidden;
   }
 
   &-prefix {
@@ -65,42 +66,29 @@
   }
 
   &-el {
-    // position: absolute;
-    // top: 0;
-    // left: 0;
-    width: 100%;
+    position: relative;
+    width: fit-content;
+    min-width: 100%;
     box-sizing: border-box;
     outline: none;
     white-space: nowrap;
     z-index: 1;
     border: none;
     font-size: 14px;
-    line-height: 1.2;
-    padding: 0;
+    line-height: @input-area-height;
+    height: @input-area-height * 1em;
     font-family: inherit;
-    overflow: auto;
+    padding-right: 2px;
 
     &-container {
       position: absolute;
-      top: 50%;
+      top: 0;
       left: 0;
       width: 100%;
-      height: 1.2em;
       margin: 0;
       font-family: inherit;
-      overflow: hidden;
-      transform: translateY(-50%);
+      overflow: auto;
     }
-  }
-
-  // &-el-div {
-  //   display: flex;
-  //   align-items: center;
-  //   line-height: 1;
-  // }
-
-  &-el-input {
-    top: -0.3px;
   }
 
   &--hide {
@@ -111,11 +99,10 @@
 
   &-blinking-cursor {
     position: absolute;
-    height: 1.2em;
+    height: @input-blinking-cursor * 1em;
     width: 1px;
     background-color: rgba(0, 0, 0, 0.88);
-    top: 50%;
-    transform: translateY(-50%);
+    top: ((@input-area-height - @input-blinking-cursor) / 2) * 1em;
     animation: blinking 1s 0.2s infinite steps(1, start);
     z-index: 2;
   }

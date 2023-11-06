@@ -35,8 +35,8 @@ export function useSignal({ props, model }: Config) {
 
     const offChange = FAKE_INPUT_SIGNAL.on(
       getSignalName(props.namespace, 'onchange'),
-      (value, composition) => {
-        model.getEffect('handleChange')(value, composition);
+      (value, composition, compositionEndChange) => {
+        model.getEffect('handleChange')(value, composition, compositionEndChange);
       }
     );
 

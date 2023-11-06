@@ -23,10 +23,11 @@ export interface InputModelState {
   selectionRange: RangeData | null;
   initialRangeData: RangeData | null;
   composition: boolean;
+  compositionEndChange: boolean;
 }
 
 export interface InputModelEffects {
-  handleChange: (val: string, composition?: boolean) => void;
+  handleChange: (val: string, composition?: boolean, compositionEndChange?: boolean) => void;
   handleSetBlinkingCursor: (showBlinkingCursor: boolean, silent?: boolean) => void;
 }
 

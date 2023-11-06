@@ -16,12 +16,14 @@ export function useInputModel(props: FakeInputProps) {
       selectionRange: null,
       composition: false,
       initialRangeData: null,
+      compositionEndChange: false,
     },
     effects: {
-      handleChange: (val, composition = false) => {
+      handleChange: (val, composition = false, compositionEndChange = false) => {
         model.setState(
           {
             composition,
+            compositionEndChange,
           },
           {
             silent: true,

@@ -10,7 +10,7 @@ export interface InputState {
 }
 
 interface InputOptions {
-  onChange?: (val: string, composition: boolean) => void;
+  onChange?: (val: string, composition: boolean, compositionEndChange: boolean) => void;
   onSelectionChange?: () => void;
   namespace?: string;
 }
@@ -71,17 +71,18 @@ export function createFakeInputStdIn(options?: InputOptions) {
     );
   };
 
-  const handleOnChange = (composition = false) => {
+  const handleOnChange = (composition = false, compositionEndChange = false) => {
     const oldValue = inputState.value;
     updateInputState({
       compositionstart: false,
       value: input.value,
     });
-    onChange?.(input.value, composition);
+    onChange?.(input.value, composition, compositionEndChange);
     FAKE_INPUT_SIGNAL.emit(
       getSignalName(inputState.namespace, 'onchange'),
       input.value,
-      composition
+      composition,
+      compositionEndChange,
     );
 
     if (input.value.length < oldValue.length) {
@@ -90,7 +91,7 @@ export function createFakeInputStdIn(options?: InputOptions) {
   };
 
   const offCompositionend = listen(input, 'compositionend', () => {
-    handleOnChange();
+    handleOnChange(false, true);
   });
 
   const offInput = listen(input, 'input', (e) => {

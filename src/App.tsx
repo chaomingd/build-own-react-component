@@ -32,6 +32,7 @@ const App: React.FC = () => {
           setValue(val);
         }}
       />
+      <input />
     </div>
   );
 };

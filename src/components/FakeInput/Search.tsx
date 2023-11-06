@@ -1,4 +1,4 @@
-import Input from './Input'
+import Input from './FakeInput'
 import { FakeInputProps } from './type';
 import { SearchOutlined } from '@ant-design/icons'
 import {forwardRef} from "react";

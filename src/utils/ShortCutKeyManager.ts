@@ -34,7 +34,7 @@ export class ShortCutKeyManager extends EventEmitter {
     // @ts-ignore
     const unKeyDown = listen(dom, 'keydown', (e: KeyboardEvent) => {
       const key = getAlphaFormCode(e.code).toLowerCase();
-      console.log(key)
+      // console.log(key)
       this._keydownMap[key] = true;
       Object.keys(this._listeners).forEach(shortCutKey => {
         if (this.isShortCutKeyPress(shortCutKey) && !triggered[shortCutKey]) {

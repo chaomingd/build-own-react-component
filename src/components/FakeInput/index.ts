@@ -1,4 +1,4 @@
-import Input from './Input'
+import Input from './FakeInput'
 import Search from './Search';
 
 type _InputType = typeof Input;

@@ -1,4 +1,4 @@
-import { MutableRefObject, useLayoutEffect, useRef } from 'react';
+import { MutableRefObject, useLayoutEffect } from 'react';
 import { InputModel } from './useInputModel';
 import { setRange } from '../utils/setRange';
 
@@ -14,17 +14,20 @@ export function useBlinkingCursorLayout({
   fakeInputDivRef,
 }: Config) {
   const { showBlinkingCursor, selectionRange } = model.getState();
-  const cursorLeftRef = useRef(0);
   useLayoutEffect(() => {
     if (selectionRange && fakeInputDivRef.current) {
+      // 调整自定义光标位置
+      const fakeInputParent = fakeInputDivRef.current!
+        .parentElement! as HTMLElement;
+      const fakeInputRect = fakeInputParent.getBoundingClientRect();
       if (showBlinkingCursor) {
-        const fakeInputRect = fakeInputDivRef.current!.getBoundingClientRect();
         const range = setRange(fakeInputDivRef.current!, selectionRange);
+
         const rangeRect = range.getBoundingClientRect();
-        const scrollLeft = fakeInputDivRef.current.scrollLeft;
-        const fakeInputDivRect =
-          fakeInputDivRef.current!.getBoundingClientRect();
-        const relativeLeft = rangeRect.left - fakeInputDivRect.left;
+        const scrollLeft = fakeInputParent.scrollLeft;
+        const scrollWidth = fakeInputParent.scrollWidth;
+        const maxScrollLeft = scrollWidth - fakeInputRect.width;
+        const relativeLeft = rangeRect.left - fakeInputRect.left;
         // const left = rangeRect.left - fakeInputRect.left;
 
         if (!range.collapsed) {
@@ -34,36 +37,32 @@ export function useBlinkingCursorLayout({
         }
         let nextScrollLeft: number | undefined;
         if (relativeLeft > fakeInputRect.width) {
-          const maxLeft =
-            fakeInputDivRef.current.scrollWidth - fakeInputRect.width;
           nextScrollLeft = Math.min(
-            maxLeft,
+            maxScrollLeft,
             scrollLeft + fakeInputRect.width / 2
           );
         } else if (relativeLeft < 0) {
-          const minLeft = 0;
-          nextScrollLeft = Math.max(
-            minLeft,
-            scrollLeft - fakeInputRect.width / 2
-          );
+          nextScrollLeft = Math.max(0, scrollLeft - fakeInputRect.width / 2);
         }
         if (nextScrollLeft !== undefined) {
-          // console.log(nextScrollLeft, relativeLeft, relativeLeft - (nextScrollLeft - inputDivLeftRef.current), fakeInputDivRect.width)
-          fakeInputDivRef.current.scrollLeft = nextScrollLeft;
-          cursorLeftRef.current = Math.max(
-            0,
-            relativeLeft - (nextScrollLeft - scrollLeft)
-          );
-        } else {
-          cursorLeftRef.current = Math.max(0, relativeLeft);
+          fakeInputParent.scrollLeft = nextScrollLeft;
         }
-        cursorRef.current!.style.left = cursorLeftRef.current + 'px';
+        cursorRef.current!.style.left =
+          Math.min(Math.max(0, (relativeLeft + scrollLeft) | 0), scrollWidth - 2) +
+          'px';
       } else {
-        const range = setRange(fakeInputDivRef.current, selectionRange);
+        // contenteditable输入后光标会恢复到初始位置，需要修正
+        const range = setRange(fakeInputDivRef.current!, selectionRange);
         const selection = window.getSelection();
         selection?.removeAllRanges();
         selection?.addRange(range);
-        fakeInputDivRef.current.scrollLeft = 0;
+        if (model.getState().compositionEndChange) {
+          const rangeRect = range.getBoundingClientRect();
+          const relativeLeft = rangeRect.left - fakeInputRect.left;
+          if (relativeLeft > fakeInputRect.width) {
+            fakeInputParent.scrollLeft = fakeInputParent.scrollLeft + relativeLeft - fakeInputRect.width + 2;
+          }
+        }
       }
     }
   }, [showBlinkingCursor, selectionRange]);
