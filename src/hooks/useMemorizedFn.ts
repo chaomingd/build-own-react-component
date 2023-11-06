@@ -6,7 +6,7 @@ export function useMemorizedFn<T extends Function>(fn: T) {
   const f = useRef<T>();
   if (!f.current) {
     (f.current as any) = (...args) => {
-      fnRef.current(...args)
+      return fnRef.current(...args)
     }
   }
   return f.current as T;

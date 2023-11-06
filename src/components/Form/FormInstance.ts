@@ -26,7 +26,7 @@ export class FormInstance extends Model<FormState> {
       computed: [
         {
           keys: ['errorsMap'],
-          hander: ({ errorsMap }) => {
+          handler: ({ errorsMap }) => {
             return {
               errors: objectToArray(errorsMap, (item) => item.field),
             };

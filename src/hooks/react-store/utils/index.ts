@@ -30,7 +30,7 @@ export function calcComputedState<TState extends Record<string, any>>({
         partialState = computedItem(nextState, prevState);
       } else {
         if (computedItem.keys && computedItem.keys.some((key) => diffKeysMap[key])) {
-          partialState = computedItem.hander(nextState, diffKeysMap, prevState);
+          partialState = computedItem.handler(nextState, diffKeysMap, prevState);
         }
       }
       if (partialState) {
@@ -56,7 +56,7 @@ export function execWatchHandler<TState extends Record<string, any>>({
   if (watch) {
     watch.forEach((watchItem) => {
       if (watchItem.keys && watchItem.keys.some((key) => diffKeysMap[key])) {
-        watchItem.hander && watchItem.hander(nextState, diffKeysMap, prevState);
+        watchItem.handler && watchItem.handler(nextState, diffKeysMap, prevState);
       }
     });
   }

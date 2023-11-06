@@ -1,53 +1,39 @@
-import './App.css';
-import Form from './components/Form';
-import { Input } from 'antd';
+import { useEffect, useRef, useState } from 'react';
+import Portal from './components/Portal';
+import { getScrollBarSize } from './utils/scrollBar';
+import { createFakeInputStdIn } from './components/FakeInput/createFakeInputStdIn';
+import FakeInput from './components/FakeInput';
 
-function App() {
-  console.log('app render')
+const scrollbarSize = getScrollBarSize();
+
+console.log(scrollbarSize);
+
+const App: React.FC = () => {
+  const [value, setValue] = useState('');
+  useEffect(() => {
+    const { focus, destroy } = createFakeInputStdIn({
+      onChange: (value) => {
+        setValue(value);
+      },
+    });
+
+    focus();
+
+    return () => {
+      destroy();
+    };
+  }, []);
   return (
-    <div className="App">
-      <Form
-        onValuesChange={(values) => {
-          // console.log(values);
+    <div>
+      <FakeInput.Search
+        value={value}
+        round
+        onChange={(val) => {
+          setValue(val);
         }}
-      >
-        <Form.Item
-          labelStyles={{
-            width: 100,
-          }}
-          label="用户名"
-          field={['userInfo', 'username']}
-          rules={[
-            {
-              required: true,
-              message: '请输入用户名'
-            },
-            {
-              type: 'number',
-              message: '只能是数字'
-            }
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        {/* <Form.Item
-          labelStyles={{
-            width: 100,
-          }}
-          label="密码"
-          field={['userInfo', 'password']}
-          rules={[
-            {
-              required: true,
-              message: '请输入密码'
-            }
-          ]}
-        >
-          <Input />
-        </Form.Item> */}
-      </Form>
+      />
     </div>
   );
-}
+};
 
 export default App;

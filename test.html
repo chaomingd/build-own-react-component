@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .scroll-container {
+      position: relative;
+      width: 500px;
+      height: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column-reverse;
+      padding: 30px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      overflow: auto;
+    }
+
+    .scroll-item {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      position: relative;
+      height: 30px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      width: 45%;
+      margin-bottom: 15px;
+      padding-left: 10px;
+    }
+
+    .layout-left {
+      align-self: flex-start;
+      margin-left: 30px;
+    }
+
+    .layout-left::after {
+      position: absolute;
+      left: -40px;
+      top: 0;
+      content: '';
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid #ddd;
+    }
+
+    .layout-right {
+      align-self: flex-end;
+      margin-right: 30px;
+    }
+
+    .layout-right::after {
+      position: absolute;
+      right: -40px;
+      top: 0;
+      content: '';
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="scroll-container">
+  </div>
+
+  <script>
+    const scrollContainer = document.querySelector('.scroll-container')
+    let page = 10;
+    const pageSize = 20;
+
+    scrollContainer.appendChild(batchCreateItems());
+
+    const scrollHeight = scrollContainer.scrollHeight;
+    const height = scrollContainer.getBoundingClientRect().height;
+
+    const maxScrollTop = scrollHeight - height;
+
+    function createItem(indexText) {
+      const types = ['layout-left', 'layout-right']
+      const index = Math.floor(Math.random() * 2)
+      const div = document.createElement('div')
+      div.innerText = indexText;
+      div.className = `scroll-item ${types[index]}`
+      return div;
+    }
+
+    function batchCreateItems() {
+      const fragment = document.createDocumentFragment();
+      for (let i = pageSize - 1; i >= 0; i--) {
+        item = createItem(page * pageSize + i)
+        fragment.appendChild(item)
+      }
+      return fragment;
+    }
+    let timer
+    scrollContainer.addEventListener('scroll', () => {
+      const scrollTop = scrollContainer.scrollTop
+
+      if (scrollTop <= (-maxScrollTop + 100)) {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          if (page <= 0) return;
+          page--
+          scrollContainer.appendChild(batchCreateItems());
+        }, 300)
+      }
+    })
+  </script>
+</body>
+
+</html>

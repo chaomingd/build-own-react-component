@@ -3,11 +3,11 @@ export type TPromiseValue<T> = T | Promise<T>;
 export type TComputedHandler<TState, R = any> = (state: TState, keyMap: Record<keyof TState & string, boolean>, prevState: TState) => R;
 export type TWatch<TState extends Record<string, any>> = Array<{
   keys: Array<keyof TState>;
-  hander: TComputedHandler<TState, any>;
+  handler: TComputedHandler<TState, any>;
 }>;
 export type TComputed<TState extends Record<string, any>> = Array<{
   keys: Array<keyof TState>;
-  hander: TComputedHandler<TState, Partial<TState>>;
+  handler: TComputedHandler<TState, Partial<TState>>;
 } | ((state: TState, prevState: TState) => Partial<TState>)>;
 
 export interface IDispatchOptions {

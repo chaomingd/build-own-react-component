@@ -1,0 +1,37 @@
+.dragItem {
+  position: fixed;
+  z-index: 10000;
+  opacity: 0.4;
+  top: 0;
+  left: 0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+  }
+
+  &[effect='disabled'] {
+    &::after {
+      cursor: not-allowed;
+    }
+  }
+  
+  &[effect='drop'] {
+    &::after {
+      cursor: copy;
+    }
+  }
+
+  &[effect='move'] {
+    &::after {
+      cursor: move;
+    }
+  }
+}
