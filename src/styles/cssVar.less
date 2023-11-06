@@ -1,0 +1,35 @@
+// var.less
+@prefix: sp;
+
+// design-token.less
+// var(--sp-color-primary, #345678);
+.apply-design-token(@tokens) {
+  & {
+    each(@tokens, {
+         --@{prefix}-@{key}: @value;
+    })
+  }
+}
+
+:root {
+  .apply-design-token({
+    color-primary: #ddd;
+  });
+}
+
+// mixin.less
+.cssVar(@block, @rule, @type: '') {
+  & {
+    each(@rule, {
+      // 去除变量定义 @xx: val;
+      .css() when((replace(@key, '@', '') = @key)) {
+        @{key}: if(@type = '', ~"var(--@{prefix}-@{block}-@{key}, @{value})", ~"var(--@{prefix}-@{block}-@{key}-@{type}, @{value})");
+      }
+      .css();
+    })
+  }
+}
+
+.var(@name, @default: '') {
+  @val: if((@default = ''), ~"var(--@{prefix}-@{name})", ~"var(--@{prefix}-@{name}, @{default})");
+}

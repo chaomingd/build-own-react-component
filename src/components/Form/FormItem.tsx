@@ -71,17 +71,17 @@ const FormItem = ({
   return (
     <div
       className={classNames(
-        'ks-form-item',
-        hasForItemErrorClassName && 'ks-form-item-error',
+        'sp-form-item',
+        hasForItemErrorClassName && 'sp-form-item-error',
         className
       )}
     >
       {label != undefined && (
-        <label style={labelStyles} className="ks-form-item-label">
+        <label style={labelStyles} className="sp-form-item-label">
           {label}
         </label>
       )}
-      <div style={wrapperStyles} className="ks-form-item-content">
+      <div style={wrapperStyles} className="sp-form-item-content">
         {renderChild}
         <Transition
           model={transtionModel}
@@ -92,7 +92,7 @@ const FormItem = ({
             return (
               <div
                 className={classNames(
-                  'ks-form-error-message',
+                  'sp-form-error-message',
                   transitionClassName
                 )}
               >

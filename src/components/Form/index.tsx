@@ -23,7 +23,7 @@ const Form = ({ form, children, className, onValuesChange, onFieldChange, onForm
   }
   return (
     <FormContext.Provider value={formInstance}>
-      <div className={classNames('ks-form', className)}>
+      <div className={classNames('sp-form', className)}>
         <form onSubmit={() => {
           const errors = formInstance.validate();
           if (!errors.length) {
