@@ -38,6 +38,22 @@
   }
 }
 
+// 伪类
+.psd(@type: '', @content) {
+  &:@{type} {
+    @tp: @type;
+    @content();
+  }
+}
+
+// 伪元素
+.psde(@type: '', @content) {
+  &::@{type} {
+    @tp: @type;
+    @content();
+  }
+}
+
 
 .b(form, {
   .cssVar(@b, {
